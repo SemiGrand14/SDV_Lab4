@@ -128,11 +128,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BaseAccount.cpp" />
+    <ClCompile Include="CheckingAccount.cpp" />
     <ClCompile Include="SDV_Lab4.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\SDV_Lab3\Helper.h" />
     <ClInclude Include="BaseAccount.h" />
+    <ClInclude Include="CheckingAccount.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
