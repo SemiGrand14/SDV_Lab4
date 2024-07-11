@@ -137,6 +137,7 @@
     <ClInclude Include="BaseAccount.h" />
     <ClInclude Include="CheckingAccount.h" />
     <ClInclude Include="CreditAccount.h" />
+    <ClInclude Include="Helper.h" />
     <ClInclude Include="SavingsAccount.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
