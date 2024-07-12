@@ -8,6 +8,6 @@ void CheckingAccount::Withdraw(float amount)
 	if (_numWithdrawals > 10)//if more than 10 withdrawals have been made...
 	{
 		_acctBalance -= withdrawalFee;//take the fee from the account balance
-		std::cout << "You have exceeded the maximum 10 free withdrawals. This and each subsequent withdrawal will incur a $5 fee.";
+		std::cout << "\nYou have exceeded the maximum 10 free withdrawals. This and each subsequent withdrawal will incur a $5 fee.\n";
 	}
 }
