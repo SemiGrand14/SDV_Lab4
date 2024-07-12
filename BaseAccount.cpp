@@ -10,5 +10,5 @@ void BaseAccount::Withdraw(float amount)// decreases balance by amount. Does NOT
 }
 void BaseAccount::Deposit(float amount) //increases balance by amount
 {
-	_acctBalance = +amount;
+	_acctBalance += amount;
 }

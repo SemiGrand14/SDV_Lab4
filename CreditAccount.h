@@ -7,6 +7,7 @@ private:
 	int _creditUsed=0;
 
 	//Methods here:
+public:
 	void Withdraw(float amount) override;//override baseaccount version of Withdraw()
 };
 

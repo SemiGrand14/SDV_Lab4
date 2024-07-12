@@ -3,7 +3,7 @@ class BaseAccount
 {
 	//Members here:
 protected:
-	float _acctBalance=0;//Why initialize as zero in class member declaration instead of default constructor or visa versa?
+	float _acctBalance= 0;
 	int _numWithdrawals = 0;
 
 	//Methods here:

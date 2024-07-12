@@ -21,7 +21,7 @@ int main()
     //menu system
     int accountSelect;
     std::string userAccounts[3] = { "Checking", "Savings", "Credit" };
-    std::string accountOptions[3] = { "Check Balance", "Deposit", "Withdraw" };
+    std::string accountOptions[4] = { "Check Balance", "Deposit", "Withdraw", "Main Menu"};
     std::cout << "Which account would you like to access?\n";
     Helper::PrintMenu(userAccounts, 3);
     std::cin >> accountSelect;
@@ -29,27 +29,51 @@ int main()
     {
     case (1): //Case for Checking Account
     {
+        std::cout << "-----------Checking--------------\n";
         int menuSelect;
-        Helper::PrintMenu(accountOptions, 3);
+        Helper::PrintMenu(accountOptions, 4);
+        std::cout << "---------------------------------\n";
         std::cin >> menuSelect;
         switch (menuSelect)
         {
-        case (1):
+
+            //TODO: CHECKING ACCOUNT ITEMS:
+            // Show Balance - done
+            // Deposit Cash - done
+            // Withdraw Cash - done
+            
+        case (1)://Checking Balance 
+                 //- call GetBalance() on userChecking and print it to the screen
         {
-            userChecking->GetBalance();
+            float userBalance = userChecking->GetBalance();
+            std::cout << "Your current balance is: $" << userBalance;
             break;
         }
-        case (2):
+        case (2)://Checking Deposit 
+                 // - ask for how much to deposit, get input, call Deposit() on userChecking and put in input, call GetBalance() and output new balance
         {
             float depositAmount;
             std::cout << "How much would you like to deposit?\n";
             std::cin >> depositAmount;
             userChecking->Deposit(depositAmount);
+            float userBalance = userChecking->GetBalance();
+            std::cout << "Your new balance is: $" << userBalance;
             break;
         }
-        case (3):
+        case (3)://Checking Withdrawal
+                 // - ask for how much to withdraw, get input, call Withdraw() on userChecking and put in input, call GetBalance() and output new balance
         {
+            float withdrawAmount;
+            std::cout << "How much would you like to withdraw?\n";
+            std::cin >> withdrawAmount;
+            userChecking->Withdraw(withdrawAmount);
+            float userBalance = userChecking->GetBalance();
+            std::cout << "Your new balance is: $" << userBalance;
             break;
+        }
+        case (4)://Return to main menu
+        {
+            Helper::PrintMenu(userAccounts, 3);
         }
         default:
             break;
@@ -57,28 +81,43 @@ int main()
         break;
     }
     case (2): //Case for Savings Account
+
+        //TODO: CHECKING ACCOUNT ITEMS:
+            // Show Balance - done
+            // Deposit Cash - done
+            // Withdraw Cash - done
+
     {
         int menuSelect;
         Helper::PrintMenu(accountOptions, 3);
         std::cin >> menuSelect;
         switch (menuSelect)
         {
-        case (1):
+        case (1)://Savings Balance
         {
+            float userBalance = userSavings->GetBalance();
+            std::cout << "Your current balance is: $" << userBalance;
             break;
         }
-        case (2):
+        case (2)://Savings Deposit
         {
+            float depositAmount;
+            std::cout << "How much would you like to deposit?\n";
+            std::cin >> depositAmount;
+            userSavings->Deposit(depositAmount);
             break;
         }
-        case (3):
+        case (3)://Savings Withdrawal
         {
+            float withdrawAmount;
+            std::cout << "How much would you like to withdraw?\n";
+            std::cin >> withdrawAmount;
+            userSavings->Withdraw(withdrawAmount);
             break;
         }
         default:
             break;
         }
-        break;
         break;
     }
     case (3): //Case for Credit Account
@@ -88,22 +127,31 @@ int main()
         std::cin >> menuSelect;
         switch (menuSelect)
         {
-        case (1):
+        case (1)://Credit Balance
         {
+            float userBalance = userCredit->GetBalance();
+            std::cout << "Your current balance is: $" << userBalance;
             break;
         }
-        case (2):
+        case (2)://Credit deposit
         {
+            float depositAmount;
+            std::cout << "How much would you like to deposit?\n";
+            std::cin >> depositAmount;
+            userCredit->Deposit(depositAmount);
             break;
         }
-        case (3):
+        case (3)://Credit Withdrawal
         {
+            float withdrawAmount;
+            std::cout << "How much would you like to withdraw?\n";
+            std::cin >> withdrawAmount;
+            userCredit->Withdraw(withdrawAmount);
             break;
         }
         default:
             break;
         }
-        break;
         break;
     }
     default:
