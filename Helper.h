@@ -9,6 +9,7 @@ namespace Helper
 	void ClearIgnoreBuffer(); //Done
 	void PrintInteger(int* valueToPrint); //Done
 	int GenerateRandomNumber(const int* minRange = 0, const int* maxRange=0); //Done
+	void ClearScreen() { system("cls"); }; //clear the screen - done
 
 	//GetValidatedInt----------------------------------------------------------------------------------
 	int GetValidatedInt(const char* strMessage, int nMinimumRange, int nMaximumRange)
