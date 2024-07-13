@@ -8,6 +8,10 @@ void BaseAccount::Withdraw(float amount)// decreases balance by amount. Does NOT
 		_acctBalance -= amount;//reduce balance by the amount
 		_numWithdrawals += 1;//increase _numWithdrawals by 1
 	}
+	if ((_acctBalance - amount) <= 0)
+	{
+		_acctBalance = 0;
+	}
 	if (_acctBalance <= 0)
 	{
 		std::cout << "You have zero dollars remaining in this account. Please deposit more money to make any more withdrawals.\n";

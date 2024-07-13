@@ -10,6 +10,8 @@ namespace Helper
 	void PrintInteger(int* valueToPrint); //Done
 	int GenerateRandomNumber(const int* minRange = 0, const int* maxRange=0); //Done
 	void ClearScreen() { system("cls"); }; //clear the screen - done
+	void TextFormattingReset() { std::cout << "\033[0m"; };//reset all formatting back to normal
+	void TextColorChange(const std::string& colorCode) { std::cout << "\033[" << colorCode << "m"; };//sets the text color with the input string color code
 
 	//GetValidatedInt----------------------------------------------------------------------------------
 	int GetValidatedInt(const char* strMessage, int nMinimumRange, int nMaximumRange)

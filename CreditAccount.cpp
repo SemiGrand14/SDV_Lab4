@@ -7,7 +7,7 @@ void CreditAccount::Withdraw(float amount)
 	if (_creditUsed > 40 || (amount + _creditUsed) > 40) //if you are at your credit limit already or this withdrawal will put you over your credit limit...
 	{
 		BaseAccount::Deposit(amount + overdraftFee);//use deposit here since its a credit account and a higher balance is the amount of debt
-		std::cout << "You have gone over the $40 spending limit. This withdrawal and all subsequent withdrawals will incur a $5000 fee.\n";
+		std::cout << "You have gone over the $40 spending limit. This withdrawal and all subsequent withdrawals will incur a \033[31m$5000 fee.\n";
 		_creditUsed += amount;//increase credit used
 	}
 	else
