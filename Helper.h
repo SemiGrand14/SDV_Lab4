@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 
+
 namespace Helper 
 {
 	//Declare Methods here-----------------------------------------------------------------------
@@ -62,6 +63,7 @@ namespace Helper
 	//ClearIgnoreBuffer-----------------------------------------------------------------
 	void ClearIgnoreBuffer()
 	{
+		//std::cin.fail();
 		std::cin.ignore();
 		std::cin.clear();
 	}

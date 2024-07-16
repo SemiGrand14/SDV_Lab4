@@ -4,10 +4,16 @@
 #include "CreditAccount.h"
 #include "Helper.h"//add in helper file
 #include <crtdbg.h>
+#include <fstream>
+#include <vector>
 #define MEMORY_LEAK_LINE 1
 
 void Withdraw(BaseAccount* userAccount, float amount);
 void Deposit(BaseAccount* userAccount, float amount);
+
+//------------------------------LAB 5 Functions:--------------------------------------------
+void WriteBinaryFile(BaseAccount* userChecking, BaseAccount* userSavings, BaseAccount* userCredit, std::vector<float>& accountBalances);
+//------------------------------------------------------------------------------------------
 
 int main()
 {
@@ -23,10 +29,80 @@ int main()
 	SavingsAccount* userSavings = new SavingsAccount();
 	CreditAccount* userCredit = new CreditAccount();
 
-	//Start checking and savings with $1000
-	std::cout << "\nCongratulations, your recent investment in DogeCoin paid off! Your checking and savings accounts each have $1000.\n";
-	Deposit(userChecking, 1000);
-	Deposit(userSavings, 1000);
+	//------------------------Lab 5 Implementation--------------------------------------------
+	//declare account balance vector to read from and to input values to:
+	std::vector<float> accountBalances;
+
+	//read in binary file to print the balances
+	//declare ifstream object
+	std::ifstream fin;
+	//open file as binary output using ios_base::binary and in
+	fin.open("AccountBalances.bin", std::ios_base::binary | std::ios_base::in);
+	//if file exists
+	if (fin.good())
+	{
+		//if file is open
+		if (fin.is_open())
+		{
+			//calculate the size in bytes
+			fin.seekg(0, std::ios_base::end);//go to the end of the file
+			int count = fin.tellg(); //calculate number of bytes in file
+			fin.seekg(0, std::ios_base::beg);//go back to the beginning of the file
+
+			//get number of accounts by dividing count by sizeof float
+			int numAccounts = count / sizeof(float);
+			//resize accountBalances vector
+			accountBalances.resize(numAccounts);
+
+			//read the balances
+			fin.read((char*)&accountBalances[0], count);
+
+			fin.close();
+		}
+		//print the account balances - cycle through the three accounts. Deposit the vector float amount into the relevant account. Print which account it is and how much is in the account.
+		std::cout << "\n-------------------WELCOME BACK: ACCOUNT BALANCES----------------------\n";
+		for (size_t i = 0; i < accountBalances.size(); i++)
+		{
+			switch (i)
+			{
+			case(0):
+			{
+				Deposit(userChecking, accountBalances[i]);
+				std::cout << "Checking: $" << accountBalances[i] << '\t';
+				break;
+			}
+			case(1):
+			{
+				Deposit(userSavings, accountBalances[i]);
+				std::cout << "Savings: $" << accountBalances[i] << '\t';
+				break;
+			}
+			case(2):
+			{
+				if (accountBalances[i] > 0)
+				{
+					Deposit(userCredit, accountBalances[i]);
+					std::cout << "Credit: $" << accountBalances[i] << '\t';
+				}
+				else
+				{
+					std::cout << "Credit: $" << accountBalances[i] << '\t';
+				}
+				break;
+			}
+			}
+		}
+		std::cout << "\n-----------------------------------------------------------------------\n";
+	}
+	//if file does not exist
+	else {
+		//Start checking and savings with $1000
+		std::cout << "\nCongratulations, your recent investment in DogeCoin paid off! Your checking and savings accounts each have $1000.\n";
+		Deposit(userChecking, 1000);
+		Deposit(userSavings, 1000);
+	}
+	//-------------------------End Lab 5 Implementation at top of Main--------------------------------------
+
 
 	//menu system
 	int accountSelect;
@@ -87,7 +163,7 @@ int main()
 					Withdraw(userChecking, withdrawAmount);//call withdraw
 					float userBalance = userChecking->GetBalance();//get new balance and print
 					Helper::TextColorChange("31");
-					std::cout << "$" << withdrawAmount<< "\033[0m withdrawn. Your new balance is: \033[32m$" << userBalance << std::endl;
+					std::cout << "$" << withdrawAmount << "\033[0m withdrawn. Your new balance is: \033[32m$" << userBalance << std::endl;
 					Helper::TextFormattingReset();
 				}
 				else//if they don't have money in account
@@ -235,17 +311,46 @@ int main()
 		}
 	} while (accountSelect < 4);//loop so long as the input is less than 4
 
+	//Lab5--------------------Write balance amounts to binary file--------------------------------------
+	WriteBinaryFile(userChecking, userSavings, userCredit, accountBalances);
+	//Lab5----------------------------------------------------------------------------------------------
+
 	//delete accounts to free up memory
 	delete userChecking;
 	delete userSavings;
 	delete userCredit;
 }
+
 void Withdraw(BaseAccount* userAccount, float amount) // BaseAccount pointer for selected user account and ammount to withdraw as parameters
 {
 	userAccount->Withdraw(amount); //pass the selected account point to the withdraw function
 }
+
 void Deposit(BaseAccount* userAccount, float amount) //same as Withdraw()
 {
 	userAccount->Deposit(amount);
 }
+
+//Lab5-----------------------------------------------------------------------------------------------------------------------------
+void WriteBinaryFile(BaseAccount* userChecking, BaseAccount* userSavings, BaseAccount* userCredit, std::vector<float>& accountBalances)
+{
+	accountBalances.clear();//clear vector so only updated/current balances exist
+
+	accountBalances.push_back(userChecking->GetBalance());
+	accountBalances.push_back(userSavings->GetBalance());
+	accountBalances.push_back(userCredit->GetBalance());
+
+	//Open file for binary output
+	std::ofstream fout;
+	fout.open("AccountBalances.bin", std::ios_base::out | std::ios_base::binary);
+
+	//if file is open
+	if (fout.is_open())
+	{
+		fout.write((char*)&accountBalances[0], accountBalances.size() * sizeof(float));
+		fout.close();
+	}
+}
+//---------------------------------------------------------------------------------------------------------------------------------
+
 
